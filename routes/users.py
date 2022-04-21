@@ -25,3 +25,8 @@ def create_user(user: User):
     result = conn.execute(users.insert(), new_user)
     print(result)
     return conn.execute(users.select().where(users.c.id == result.lastrowid)).first()
+
+@user_routes.get("/users/{id}")
+def get_user(id: int):
+    return conn.execute(users.select().where(users.c.id == id)).first()
+    
