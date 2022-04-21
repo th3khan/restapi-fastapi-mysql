@@ -36,7 +36,7 @@ def delete_user(id: int):
     conn.execute(users.delete().where(users.c.id == id))
     return {"message": "User deleted"}
 
-@user_routes.put("/users/{id}")
+@user_routes.put("/users/{id}", response_model=User)
 def update_user(id: int, user: User):
     new_user = {
         "name": user.name,
