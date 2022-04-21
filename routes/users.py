@@ -29,4 +29,9 @@ def create_user(user: User):
 @user_routes.get("/users/{id}")
 def get_user(id: int):
     return conn.execute(users.select().where(users.c.id == id)).first()
+
+@user_routes.delete("/users/{id}")
+def delete_user(id: int):
+    conn.execute(users.delete().where(users.c.id == id))
+    return {"message": "User deleted"}
     
