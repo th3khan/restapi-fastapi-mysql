@@ -9,24 +9,24 @@ Simple Rest API with Fast Api and MySQL
 
 # Create user
 [Method] POST<br/>
-@Params user: User
+@Params user: User<br/>
 @Return ResponseBase[User]<br/>
 @Path /user
 
 # Get User
 [Method] GET<br/>
-@Params id: int
+@Params id: int<br/>
 @Return User<br/>
 @Path /user/{id}
 
 # Update User
 [Method] PUT<br/>
-@Params id: int, user: User
+@Params id: int, user: User<br/>
 @Return ResponseBase[User]<br/>
 @Path /user/{id}
 
 # Delete User
 [Method] DELETE<br/>
-@Params id: int
+@Params id: int<br/>
 @Return ResponseBase[None]<br/>
 @Path /user/{id}
