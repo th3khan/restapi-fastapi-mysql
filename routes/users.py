@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from typing import List
 from config.db import conn
 from models.user import users
 from schemas.user import User
@@ -10,11 +11,11 @@ f = Fernet(key)
 
 user_routes = APIRouter()
 
-@user_routes.get("/users")
+@user_routes.get("/users", response_model=List[User])
 def get_users():
     return conn.execute(users.select()).fetchall()
 
-@user_routes.post("/users")
+@user_routes.post("/users", response_model=User)
 def create_user(user: User):
     new_user = {
         "name": user.name,
@@ -26,7 +27,7 @@ def create_user(user: User):
     print(result)
     return conn.execute(users.select().where(users.c.id == result.lastrowid)).first()
 
-@user_routes.get("/users/{id}")
+@user_routes.get("/users/{id}", response_model=User)
 def get_user(id: int):
     return conn.execute(users.select().where(users.c.id == id)).first()
 
