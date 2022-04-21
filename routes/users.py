@@ -34,4 +34,17 @@ def get_user(id: int):
 def delete_user(id: int):
     conn.execute(users.delete().where(users.c.id == id))
     return {"message": "User deleted"}
+
+@user_routes.put("/users/{id}")
+def update_user(id: int, user: User):
+    new_user = {
+        "name": user.name,
+        "email": user.email,
+        "password": f.encrypt(user.password.encode("utf-8")).decode("utf-8")
+    }
+    conn.execute(users.update().where(users.c.id == id), new_user)
+    return {
+        "message": "User updated",
+        "data": conn.execute(users.select().where(users.c.id == id)).first()
+    }
     
