@@ -11,11 +11,11 @@ f = Fernet(key)
 
 user_routes = APIRouter()
 
-@user_routes.get("/users", response_model=List[User], status_code=status.HTTP_200_OK)
+@user_routes.get("/users", response_model=List[User], status_code=status.HTTP_200_OK, tags=["users"])
 def get_users():
     return conn.execute(users.select()).fetchall()
 
-@user_routes.post("/users", response_model=User, status_code=status.HTTP_201_CREATED)
+@user_routes.post("/users", response_model=User, status_code=status.HTTP_201_CREATED, tags=["users"])
 def create_user(user: User):
     new_user = {
         "name": user.name,
@@ -27,16 +27,16 @@ def create_user(user: User):
     print(result)
     return conn.execute(users.select().where(users.c.id == result.lastrowid)).first()
 
-@user_routes.get("/users/{id}", response_model=User, status_code=status.HTTP_200_OK)
+@user_routes.get("/users/{id}", response_model=User, status_code=status.HTTP_200_OK, tags=["users"])
 def get_user(id: int):
     return conn.execute(users.select().where(users.c.id == id)).first()
 
-@user_routes.delete("/users/{id}")
+@user_routes.delete("/users/{id}", tags=["users"])
 def delete_user(id: int):
     conn.execute(users.delete().where(users.c.id == id))
     return {"message": "User deleted"}
 
-@user_routes.put("/users/{id}", response_model=User, status_code=status.HTTP_200_OK)
+@user_routes.put("/users/{id}", response_model=User, status_code=status.HTTP_200_OK, tags=["users"])
 def update_user(id: int, user: User):
     new_user = {
         "name": user.name,
